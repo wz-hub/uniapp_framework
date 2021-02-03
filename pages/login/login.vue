@@ -77,7 +77,7 @@
 				cur: 0,
 				phone:"",
 				password:"",
-				smsCode: "",
+				//smsCode: "",
 				
 			}
 		},
@@ -124,23 +124,24 @@
 					}
 				}
 				
-				this.$http.post('/app-api/appLogin',
+				this.$http.post('/rest/login',
 					{
-						phone: this.phone,
+						username: this.phone,
 						password: this.password,
-						smsCode: this.smsCode
+						//smsCode: this.smsCode
 					},{
-						custom: {auth: false},//anth 是否验证，非必填，默认需要验证
+						//anth 是否验证，非必填， false: 不需要验证 true: 需要验证,默认为true需要验证.
+						custom: {auth: false},
 					}
 					
 				)
 				.then(res => {
 					console.log(res)
-					let data = res.data.data.loginToken
+					let data = res.data.data
 					console.log("登录成功")
 					try {
 					    uni.setStorageSync('token', data);
-						this.$Router.push({ 
+						this.$Router.pushTab({ 
 							name: 'index',
 						})
 						

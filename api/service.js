@@ -26,10 +26,13 @@ const getTokenStorage = () => {
 
 const http = new Request()
 http.setConfig((config) => { /* 设置全局配置 */
-  config.baseURL = 'http://10.0.0.66:8086/' /* 根域名不同 */
+  config.baseURL = 'http://10.0.0.66:8081/' /* 根域名不同 */
   config.header = {
     'content-type': 'application/x-www-form-urlencoded',
 	'app-requested-login-token' : getTokenStorage()
+  }
+  config.custom = {
+    auth: true, // 是否传认证token
   }
   return config
 })
@@ -44,6 +47,19 @@ http.interceptors.request.use((config) => { /* 请求之前拦截器。可以使
    //return Promise.reject(config)
    console.log("??????")
  } */
+ 
+	if (config.custom.auth) {//false: 不需要验证 true: 需要验证,默认为true需要验证.
+		if(typeof token =='undefined'|| token == null || token == ''){
+			uni.showToast({
+				title: '登录过期，请重新登录。',
+				duration: 2000
+			});
+			return Promise.reject(config)
+			this.$Router.pushTab({
+				name: 'index',
+			})
+		}
+	}
 
   return config
 }, (config) => {

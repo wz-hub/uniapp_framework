@@ -9,13 +9,13 @@ import {
 export const goLoginApi = (data) => {
   return http.middleware({
 	  method: 'POST', // 必须大写
-	  url: '/app-api/appLogin',
+	  url: '/rest/login',
 	  data: data
   })
 }
 
 export const getPINApi = (params) => {
-  return http.get('/api/user/list', {
+  return http.get('/rest/login', {
     params
   })
 }

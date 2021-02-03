@@ -32,8 +32,7 @@ router.beforeEach((to, from, next) => {
 		        });
 		    }else{
 				console.log("有token 正常跳转")
-				next(
-				)
+				next()
 			}
 		} catch (e) {
 			console.log("有问题 重新登录")

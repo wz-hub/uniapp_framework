@@ -8,6 +8,11 @@ import {router,RouterMount} from "./router.js"  //路径换成自己的
 Vue.use(router)
 Vue.use(uView)
 
+//引入vuex
+import store from './store'
+//把vuex定义成全局组件
+Vue.prototype.$store = store
+
 
 Vue.prototype.$http = http
 
@@ -16,12 +21,13 @@ Vue.config.productionTip = false
 App.mpType = 'app'
 
 const app = new Vue({
-    ...App
+    ...App,
+	store
 })
 
 //v1.3.5起 H5端 你应该去除原有的app.$mount();使用路由自带的渲染方式
 // #ifdef H5
-	RouterMount(app,'#app');
+	RouterMount(app,router,'#app');
 // #endif
 
 // #ifndef H5
